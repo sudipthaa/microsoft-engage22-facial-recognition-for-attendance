@@ -27,7 +27,6 @@ def findEncodings(pictures):
     encodeList = []
     for img in pictures:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        #img = cv2.cvtColor(img, c
         encode = face_recognition.face_encodings(img)[0]
         encodeList.append(encode)
     return encodeList
