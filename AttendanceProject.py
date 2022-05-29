@@ -5,27 +5,27 @@ import os
 from datetime import datetime
 
 path = 'ImagesAttendance'
-images = []
-classNames = []
-myList2 = os.listdir(path)
-myList = []
-for i in myList2:
+pictures = []
+classes = []
+ListTemp = os.listdir(path)
+List = []
+for i in ListTemp:
     if i.endswith(".jpg"):
-        myList.append(i)
-print(myList)
-length=len(myList)
-#for cl in myList:
-for i in range(0,length):
-    cl = myList[i]
-    curImg = cv2.imread(f'{path}/{cl}')
-    #curImg = cv2.imread(sys.path[0] + f'{path}/{cl}', 1)
-    images.append(curImg)
-    classNames.append(os.path.splitext(cl)[0])
-print(classNames)
+        List.append(i)
+print(List)
+size=len(List)
+#for cl in List:
+for i in range(0,size):
+    cl = List[i]
+    current = cv2.imread(f'{path}/{cl}')
+    #current = cv2.imread(sys.path[0] + f'{path}/{cl}', 1)
+    pictures.append(current)
+    classes.append(os.path.splitext(cl)[0])
+print(classes)
 
-def findEncodings(images):
+def findEncodings(pictures):
     encodeList = []
-    for img in images:
+    for img in pictures:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         #img = cv2.cvtColor(img, c
         encode = face_recognition.face_encodings(img)[0]
@@ -53,7 +53,7 @@ def captureScreen(bbox=(300,300,690+300,530+300)):
      return capScr
 '''
 
-encodeListKnown = findEncodings(images)
+encodeListKnown = findEncodings(pictures)
 print('Encoding Complete')
 
 cap = cv2.VideoCapture(0)
@@ -74,7 +74,7 @@ while True:
         matchIndex = np.argmin(faceDis)
 
         if matches[matchIndex]:
-            name = classNames[matchIndex].upper()
+            name = classes[matchIndex].upper()
             #print(name)
             y1,x2,y2,x1 = faceLoc
             y1, x2, y2, x1 = y1*4,x2*4,y2*4,x1*4
@@ -85,3 +85,4 @@ while True:
 
     cv2.imshow('Webcam',img)
     cv2.waitKey(1)
+
